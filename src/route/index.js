@@ -1,16 +1,14 @@
-import { createApp } from 'vue';
 import { createWebHistory, createRouter } from 'vue-router';
 
-import App from '../App.vue';
+import AppLogin from '../views/AppLogin.vue';
 
 const routes = [
   {
     path: '/',
     name: 'App',
-    component: App,
+    component: AppLogin,
   },
 ];
-createApp(App).mount('#app');
 
 const router = createRouter({
   history: createWebHistory(),
