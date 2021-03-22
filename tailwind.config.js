@@ -18,8 +18,6 @@ module.exports = {
       indigo: colors.blue,
       purple: colors.violet,
       pink: colors.pink,
-      'litepie-primary': colors.lightBlue, // color system for light mode
-      'litepie-secondary': colors.coolGray, // color system for dark mode
     },
     extend: {
       fontFamily: {
