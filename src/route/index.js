@@ -1,16 +1,14 @@
-import { createApp } from 'vue';
 import { createWebHistory, createRouter } from 'vue-router';
 
-import App from '../App.vue';
+import helloWorld from '../components/HelloWorld.vue';
 
 const routes = [
   {
     path: '/',
     name: 'App',
-    component: App,
+    component: helloWorld,
   },
 ];
-createApp(App).mount('#app');
 
 const router = createRouter({
   history: createWebHistory(),
