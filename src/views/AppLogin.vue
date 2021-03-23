@@ -97,7 +97,14 @@
                 </div>
               </div>
             </form>
-            <form action="#" method="POST" class="space-y-6" v-if="!isHidden">
+
+            <form
+              action="#"
+              method="POST"
+              class="space-y-6"
+              v-if="!isHidden"
+              @submit.prevent="submit"
+            >
               <div>
                 <label
                   for="email"
@@ -113,6 +120,7 @@
                     autocomplete="email"
                     required
                     class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    v-model="form.email"
                   />
                 </div>
               </div>
@@ -132,6 +140,7 @@
                     autocomplete="current-password"
                     required
                     class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    v-model="form.password"
                   />
                 </div>
               </div>
@@ -206,11 +215,23 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
       isHidden: false,
+      form: {
+        password: '',
+        email: '',
+      },
     };
+  },
+  methods: {
+    async submit() {
+      let response = axios.post('/auth/login', this.form);
+      //console.log(response);
+    },
   },
 };
 </script>
