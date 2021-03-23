@@ -23,8 +23,15 @@ module.exports = {
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
       },
+      colors: {
+        cyan: colors.cyan,
+      },
     },
   },
+  plugins: [
+    // ...
+    require('@tailwindcss/forms'),
+  ],
   variants: {},
   plugins: [require('@tailwindcss/forms')],
 };
