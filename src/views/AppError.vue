@@ -71,11 +71,12 @@
           <p>Try searching again or use the Go Back button below.</p>
         </div>
         <div class="mb-20 md:mb-0">
-          <button
+          <router-link
             class="text-lg font-light outline-none focus:outline-none transform transition-all hover:scale-110 text-yellow-500 hover:text-yellow-600"
+            to="/"
           >
             <i class="mdi mdi-arrow-left mr-2"></i>Go Back
-          </button>
+          </router-link>
         </div>
       </div>
       <div class="w-full md:w-1/2 text-center">
