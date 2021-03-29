@@ -2,7 +2,7 @@ import { createWebHistory, createRouter } from 'vue-router';
 
 import AppLogin from '../views/AppLogin.vue';
 import AppError from '../views/AppError.vue';
-import DashboardPage from '../views/dashboard/Dashboard.vue';
+import DashboardPage from '../views/dashboard/DashboardPage.vue';
 
 const routes = [
 	{
