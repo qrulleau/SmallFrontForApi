@@ -18,6 +18,10 @@ const routes = [
 		path: '/dashboard',
 		component: DashboardPage,
 	},
+	{
+		path: '/logout',
+		component: AppLogin,
+	},
 ];
 
 const router = createRouter({
