@@ -177,9 +177,9 @@ export default {
 				this.$axios
 					.post('/auth/login', this.form)
 					.then((response) => {
-						localStorage.setItem('JWT', response.access_token);
+						localStorage.setItem('jwt', response.access_token);
 						console.log(response.data.data);
-						if (localStorage.getItem('JWT') != null) {
+						if (localStorage.getItem('jwt') != null) {
 							if (this.$route.params.nextUrl != null) {
 								this.$router.push(this.$route.params.nextUrl);
 							} else {
