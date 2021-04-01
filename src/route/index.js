@@ -9,18 +9,24 @@ const routes = [
 		path: '/',
 		name: 'App',
 		component: AppLogin,
-	},
-	{
-		path: '/:catchAll(.*)',
-		component: AppError,
+		meta: {
+			guest: true,
+		},
 	},
 	{
 		path: '/dashboard',
 		component: DashboardPage,
+		meta: {
+			requireAuth: true,
+		},
 	},
 	{
 		path: '/logout',
 		component: AppLogin,
+	},
+	{
+		path: '/:catchAll(.*)',
+		component: AppError,
 	},
 ];
 

@@ -207,9 +207,10 @@
 								Home
 							</a>
 
-							<a
+							<button
 								href="#"
 								class="group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md text-cyan-100 hover:text-white hover:bg-cyan-600"
+								@click="logout"
 							>
 								<!-- Heroicon name: outline/document-report -->
 								<svg class="mr-4 h-6 w-6 text-cyan-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -221,7 +222,7 @@
 									/>
 								</svg>
 								Log out
-							</a>
+							</button>
 						</div>
 					</nav>
 				</div>
@@ -461,9 +462,9 @@
 							</div>
 						</div>
 					</div>
-					<div>
+					<p>
 						{{ info }}
-					</div>
+					</p>
 				</div>
 			</main>
 		</div>
@@ -479,6 +480,22 @@ export default {
 	},
 	mounted() {
 		this.$axios.get('http://localhost:8000/api/todos').then((response) => this.info);
+	},
+	methods: {
+		logout(e) {
+			e.preventDefault();
+			const jwt = localStorage.getItem('jwt');
+			this.$axios
+				.post('auth/logout', jwt)
+				.then(function (response) {
+					console.log(response);
+				})
+				.catch(function (error) {
+					console.log(error);
+				});
+			localStorage.removeItem('jwt');
+			this.$router.push('/');
+		},
 	},
 };
 </script>

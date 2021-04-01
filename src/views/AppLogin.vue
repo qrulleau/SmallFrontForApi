@@ -149,6 +149,7 @@
 				</div>
 			</div>
 		</div>
+
 		<div class="hidden lg:block relative w-0 flex-1">
 			<img
 				class="absolute inset-0 h-full w-full object-cover"
@@ -177,13 +178,15 @@ export default {
 				this.$axios
 					.post('/auth/login', this.form)
 					.then((response) => {
-						localStorage.setItem('jwt', response.access_token);
-						console.log(response.data.data);
+						localStorage.setItem('jwt', response.data.access_token);
 						if (localStorage.getItem('jwt') != null) {
 							if (this.$route.params.nextUrl != null) {
 								this.$router.push(this.$route.params.nextUrl);
+								console.log('test');
 							} else {
 								this.$router.push('dashboard');
+								console.log(this.$route);
+								console.log(this.$router);
 							}
 						}
 					})

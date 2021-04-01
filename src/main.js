@@ -30,6 +30,39 @@ axios.interceptors.response.use(
 	}
 );
 
+router.beforeEach((to, from, next) => {
+	if (to.matched.some((record) => record.meta.requiresAuth)) {
+		if (localStorage.getItem('jwt') == null) {
+			next({
+				name: 'Login',
+				params: { nextUrl: to.fullPath },
+			});
+		}
+	} else if (to.matched.some((record) => record.meta.guest)) {
+		if (localStorage.getItem('jwt') == null) {
+			next();
+		} else {
+			next({ name: 'Dashboard' });
+		}
+	} else {
+		next();
+	}
+});
+
+// router.beforeEach((to, from, next) => {
+// 	// 	if (to.matched.some((record) => record.meta.requiresAuth)) {
+// 	// 		console.log(to.matched);
+// 	// 		console.log(to.matched.some());
+// 	// 		console.log(to.matched.some(record));
+// 	// 		// if (localStorage.getItem('jwt') == null) {
+// 	// 		// 	next({
+// 	// 		// 		name: 'login',
+// 	// 		// 		params: { nextUrl: to.fullPath },
+// 	// 		// 	});
+// 	// 		// }
+// 	// 	}
+// });
+
 const app = createApp(App);
 app.config.globalProperties.$axios = axios;
 app.use(router).mount('#app');
