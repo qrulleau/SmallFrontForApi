@@ -49,20 +49,6 @@ router.beforeEach((to, from, next) => {
 	}
 });
 
-// router.beforeEach((to, from, next) => {
-// 	// 	if (to.matched.some((record) => record.meta.requiresAuth)) {
-// 	// 		console.log(to.matched);
-// 	// 		console.log(to.matched.some());
-// 	// 		console.log(to.matched.some(record));
-// 	// 		// if (localStorage.getItem('jwt') == null) {
-// 	// 		// 	next({
-// 	// 		// 		name: 'login',
-// 	// 		// 		params: { nextUrl: to.fullPath },
-// 	// 		// 	});
-// 	// 		// }
-// 	// 	}
-// });
-
 const app = createApp(App);
 app.config.globalProperties.$axios = axios;
 app.use(router).mount('#app');

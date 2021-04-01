@@ -182,11 +182,8 @@ export default {
 						if (localStorage.getItem('jwt') != null) {
 							if (this.$route.params.nextUrl != null) {
 								this.$router.push(this.$route.params.nextUrl);
-								console.log('test');
 							} else {
 								this.$router.push('dashboard');
-								console.log(this.$route);
-								console.log(this.$router);
 							}
 						}
 					})
