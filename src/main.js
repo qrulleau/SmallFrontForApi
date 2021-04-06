@@ -6,4 +6,37 @@ import axios from 'axios';
 
 axios.defaults.baseURL = import.meta.env.VITE_API_BASEURL;
 
-createApp(App).use(router).mount('#app');
+axios.interceptors.request.use(
+	function (config) {
+		if (localStorage.getItem('jwt') !== null) {
+			config.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwt');
+		}
+		return config;
+	},
+	function (error) {
+		return Promise.reject(error);
+	}
+);
+
+router.beforeEach((to, from, next) => {
+	if (to.matched.some((record) => record.meta.requiresAuth)) {
+		if (localStorage.getItem('jwt') == null) {
+			next({
+				name: 'Login',
+				params: { nextUrl: to.fullPath },
+			});
+		}
+	} else if (to.matched.some((record) => record.meta.guest)) {
+		if (localStorage.getItem('jwt') == null) {
+			next();
+		} else {
+			next({ name: 'Dashboard' });
+		}
+	} else {
+		next();
+	}
+});
+
+const app = createApp(App);
+app.config.globalProperties.$axios = axios;
+app.use(router).mount('#app');

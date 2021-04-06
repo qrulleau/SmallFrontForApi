@@ -149,6 +149,7 @@
 				</div>
 			</div>
 		</div>
+
 		<div class="hidden lg:block relative w-0 flex-1">
 			<img
 				class="absolute inset-0 h-full w-full object-cover"
@@ -160,8 +161,6 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
 	data() {
 		return {
@@ -173,8 +172,25 @@ export default {
 		};
 	},
 	methods: {
-		async submit() {
-			let response = axios.post('/auth/login', this.form);
+		submit(e) {
+			e.preventDefault();
+			if (this.form.password.length > 0) {
+				this.$axios
+					.post('/auth/login', this.form)
+					.then((response) => {
+						localStorage.setItem('jwt', response.data.access_token);
+						if (localStorage.getItem('jwt') != null) {
+							if (this.$route.params.nextUrl != null) {
+								this.$router.push(this.$route.params.nextUrl);
+							} else {
+								this.$router.push('dashboard');
+							}
+						}
+					})
+					.catch(function (error) {
+						console.error(error.response);
+					});
+			}
 		},
 	},
 };
