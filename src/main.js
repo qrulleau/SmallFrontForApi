@@ -18,18 +18,6 @@ axios.interceptors.request.use(
 	}
 );
 
-axios.interceptors.response.use(
-	function (response) {
-		return response;
-	},
-	function (error) {
-		if (error.response.status === 401) {
-			store.dispatch('user/logout');
-		}
-		return Promise.reject(error);
-	}
-);
-
 router.beforeEach((to, from, next) => {
 	if (to.matched.some((record) => record.meta.requiresAuth)) {
 		if (localStorage.getItem('jwt') == null) {

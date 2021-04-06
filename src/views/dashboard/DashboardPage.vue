@@ -382,49 +382,25 @@
 									<table class="min-w-full divide-y divide-gray-200">
 										<thead>
 											<tr>
-												<th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Transaction</th>
-												<th class="px-6 py-3 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-												<th class="hidden px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider md:block">
-													Status
-												</th>
-												<th class="px-6 py-3 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+												<th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">text</th>
+												<th class="px-6 py-3 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Completed</th>
+												<th class="px-6 py-3 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Date of création</th>
 											</tr>
 										</thead>
 										<tbody class="bg-white divide-y divide-gray-200">
-											<tr class="bg-white">
+											<tr v-for="(item, index) in info.data" :key="index" class="bg-white">
 												<td class="max-w-0 w-full px-6 py-4 whitespace-nowrap text-sm text-gray-900">
 													<div class="flex">
 														<a href="#" class="group inline-flex space-x-2 truncate text-sm">
 															<!-- Heroicon name: solid/cash -->
-															<svg
-																class="flex-shrink-0 h-5 w-5 text-gray-400 group-hover:text-gray-500"
-																xmlns="http://www.w3.org/2000/svg"
-																viewBox="0 0 20 20"
-																fill="currentColor"
-																aria-hidden="true"
-															>
-																<path
-																	fill-rule="evenodd"
-																	d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"
-																	clip-rule="evenodd"
-																/>
-															</svg>
-															<p class="text-gray-500 truncate group-hover:text-gray-900">Payment to Molly Sanders</p>
+															<p class="text-gray-500 truncate group-hover:text-gray-900">{{ item.text }}</p>
 														</a>
 													</div>
 												</td>
-												<td class="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
-													<span class="text-gray-900 font-medium">$20,000 </span>
-													USD
+												<td class="px-6 py-4 text-center whitespace-nowrap text-sm text-gray-500">
+													{{ item.completed }}
 												</td>
-												<td class="hidden px-6 py-4 whitespace-nowrap text-sm text-gray-500 md:block">
-													<span
-														class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 capitalize"
-													>
-														success
-													</span>
-												</td>
-												<td class="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">July 11, 2020</td>
+												<td class="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">{{ item.created_at }}</td>
 											</tr>
 
 											<!-- More items... -->
@@ -462,9 +438,6 @@
 							</div>
 						</div>
 					</div>
-					<p>
-						{{ info }}
-					</p>
 				</div>
 			</main>
 		</div>
@@ -475,11 +448,22 @@
 export default {
 	data() {
 		return {
-			info: null,
+			info: [],
+			errored: false,
 		};
 	},
 	mounted() {
-		this.$axios.get('http://localhost:8000/api/todos').then((response) => this.info);
+		this.$axios
+			.get('http://localhost:8000/api/todos')
+			.then((response) => {
+				this.info = response.data;
+				console.log(this.info);
+				return this.info;
+			})
+			.catch((error) => {
+				console.log(error);
+				this.errored = true;
+			});
 	},
 	methods: {
 		logout(e) {
